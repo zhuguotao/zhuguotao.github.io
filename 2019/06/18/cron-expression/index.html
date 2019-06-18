@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="cron表达式用于配置cronTrigger的实例。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔。 1.Seconds （秒） 2.Minutes（分） 3.Hours（小时） 4.Day-of-Month  （天） 5.Month（月） 6.Day-of-Week （周） 7.Year（年）  例：”0 0 12 ? * WED” 意思是：每个星期三的中午12点执行。  个">
+  <meta name="description" content="cron表达式用于配置cronTrigger的实例。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔。  Seconds （秒） Minutes（分） Hours（小时） Day-of-Month  （天） Month（月） Day-of-Week （周） Year（年）   例：”0 0 12 ? * WED” 意思是：每个星期三的中午12点执行。  个别子表达式可以包含范围或">
 <meta name="keywords" content="cron表达式,quartz">
 <meta property="og:type" content="article">
-<meta property="og:title" content="cron-expression">
+<meta property="og:title" content="cron表达式详解">
 <meta property="og:url" content="http://zhuguotao.com/2019/06/18/cron-expression/index.html">
 <meta property="og:site_name" content="朱国涛的博客">
-<meta property="og:description" content="cron表达式用于配置cronTrigger的实例。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔。 1.Seconds （秒） 2.Minutes（分） 3.Hours（小时） 4.Day-of-Month  （天） 5.Month（月） 6.Day-of-Week （周） 7.Year（年）  例：”0 0 12 ? * WED” 意思是：每个星期三的中午12点执行。  个">
+<meta property="og:description" content="cron表达式用于配置cronTrigger的实例。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔。  Seconds （秒） Minutes（分） Hours（小时） Day-of-Month  （天） Month（月） Day-of-Week （周） Year（年）   例：”0 0 12 ? * WED” 意思是：每个星期三的中午12点执行。  个别子表达式可以包含范围或">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-18T10:09:56.153Z">
+<meta property="og:updated_time" content="2019-06-18T10:15:40.766Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cron-expression">
-<meta name="twitter:description" content="cron表达式用于配置cronTrigger的实例。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔。 1.Seconds （秒） 2.Minutes（分） 3.Hours（小时） 4.Day-of-Month  （天） 5.Month（月） 6.Day-of-Week （周） 7.Year（年）  例：”0 0 12 ? * WED” 意思是：每个星期三的中午12点执行。  个">
+<meta name="twitter:title" content="cron表达式详解">
+<meta name="twitter:description" content="cron表达式用于配置cronTrigger的实例。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔。  Seconds （秒） Minutes（分） Hours（小时） Day-of-Month  （天） Month（月） Day-of-Week （周） Year（年）   例：”0 0 12 ? * WED” 意思是：每个星期三的中午12点执行。  个别子表达式可以包含范围或">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>cron-expression | 朱国涛的博客</title>
+  <title>cron表达式详解 | 朱国涛的博客</title>
   
 
 
@@ -372,7 +372,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">cron-expression
+          <h1 class="post-title" itemprop="name headline">cron表达式详解
 
               
             
@@ -398,7 +398,7 @@
                 
               
 
-              <time title="创建时间：2019-06-18 15:50:45 / 修改时间：18:09:56" itemprop="dateCreated datePublished" datetime="2019-06-18T15:50:45+08:00">2019-06-18</time>
+              <time title="创建时间：2019-06-18 15:50:45 / 修改时间：18:15:40" itemprop="dateCreated datePublished" datetime="2019-06-18T15:50:45+08:00">2019-06-18</time>
             
 
             
@@ -456,34 +456,74 @@
 
       
         <p>cron表达式用于配置cronTrigger的实例。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔。</p>
-<p>1.Seconds （秒）</p>
-<p>2.Minutes（分）</p>
-<p>3.Hours（小时）</p>
-<p>4.Day-of-Month  （天）</p>
-<p>5.Month（月）</p>
-<p>6.Day-of-Week （周）</p>
-<p>7.Year（年）</p>
+<ol>
+<li>Seconds （秒）</li>
+<li>Minutes（分）</li>
+<li>Hours（小时）</li>
+<li>Day-of-Month  （天）</li>
+<li>Month（月）</li>
+<li>Day-of-Week （周）</li>
+<li>Year（年）</li>
+</ol>
 <blockquote>
 <p>例：”0 0 12 ? * WED” 意思是：每个星期三的中午12点执行。</p>
 </blockquote>
 <p>个别子表达式可以包含范围或者列表。例如：上面例子中的WED可以换成”MON-FRI”，”MON,WED,FRI”，甚至”MON-WED,SAT”。</p>
 <p><strong>子表达式范围</strong>：</p>
-<p>1.Seconds (0~59)</p>
-<p>2.Minutes (0~59)</p>
-<p>3.Hours (0~23)</p>
-<p>4.Day-of-Month (1~31,但是要注意有些月份没有31天)</p>
-<p>5.Month (0~11，或者”JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV,DEC”)</p>
-<p>6.Day-of-Week (1~7,1=SUN 或者”SUN, MON, TUE, WED, THU, FRI, SAT”)</p>
-<p>7.Year (1970~2099)</p>
-<p>Cron表达式的格式：秒 分 时 日 月 周 年(可选)。</p>
-<p>字段名              允许的值                    允许的特殊字符 </p>
-<p>秒                     0-59                           , - * / </p>
-<p>分                     0-59                           , - * / </p>
-<p>小时                  0-23                           , - * / </p>
-<p>日                     1-31                            , - * ? / L W C</p>
-<p>月                     1-12 or JAN-DEC        , - * / </p>
-<p>周几                  1-7 or SUN-SAT         , - * ? / L C # </p>
-<p>年(可选字段)     empty                         1970-2099 , - * /</p>
+<ol>
+<li>Seconds (0~59)</li>
+<li>Minutes (0~59)</li>
+<li>Hours (0~23)</li>
+<li>Day-of-Month (1~31,但是要注意有些月份没有31天)</li>
+<li>Month (0~11，或者”JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV,DEC”)</li>
+<li>Day-of-Week (1~7,1=SUN 或者”SUN, MON, TUE, WED, THU, FRI, SAT”)</li>
+<li>Year (1970~2099)</li>
+</ol>
+<p><strong>Cron表达式的格式：秒 分 时 日 月 周 年(可选)。</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>允许的值</th>
+<th>允许的特殊字符</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>秒</td>
+<td>0-59</td>
+<td>, - * /</td>
+</tr>
+<tr>
+<td>分</td>
+<td>0-59</td>
+<td>, - * /</td>
+</tr>
+<tr>
+<td>小时</td>
+<td>0-23</td>
+<td>, - * /</td>
+</tr>
+<tr>
+<td>日</td>
+<td>1-31</td>
+<td>, - * ? / L W C</td>
+</tr>
+<tr>
+<td>月</td>
+<td>1-12 or JAN-DEC</td>
+<td>, - * /</td>
+</tr>
+<tr>
+<td>周几</td>
+<td>1-7 or SUN-SAT</td>
+<td>, - * ? / L C #</td>
+</tr>
+<tr>
+<td>年(可选字段)</td>
+<td>1970-2099</td>
+<td>, - * /</td>
+</tr>
+</tbody></table>
 <p><strong>字符含义</strong>：</p>
 <p><em>**** ：代表所有可能的值。因此，“</em>”在Month中表示每个月，在Day-of-Month中表示每天，在Hours表示每小时</p>
 <p><strong>-</strong> ：表示指定范围。</p>
