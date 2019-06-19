@@ -104,10 +104,12 @@
 <meta property="og:site_name" content="朱国涛的博客">
 <meta property="og:description" content="转自： https://www.runoob.com/java/java-regular-expressions.htmlhttps://blog.csdn.net/yb642518034/article/details/61198976 正则表达式实例一个字符串其实就是一个简单的正则表达式，例如 Hello World 正则表达式匹配 “Hello World” 字符串。 .（点号）也是一个正则">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-19T03:21:24.939Z">
+<meta property="og:image" content="c:%5CUsers%5CBelief%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1560915651843.png">
+<meta property="og:updated_time" content="2019-06-19T03:41:15.992Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java正则表达式详解">
 <meta name="twitter:description" content="转自： https://www.runoob.com/java/java-regular-expressions.htmlhttps://blog.csdn.net/yb642518034/article/details/61198976 正则表达式实例一个字符串其实就是一个简单的正则表达式，例如 Hello World 正则表达式匹配 “Hello World” 字符串。 .（点号）也是一个正则">
+<meta name="twitter:image" content="c:%5CUsers%5CBelief%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1560915651843.png">
 
 
 
@@ -398,7 +400,7 @@
                 
               
 
-              <time title="创建时间：2019-06-19 10:08:06 / 修改时间：11:21:24" itemprop="dateCreated datePublished" datetime="2019-06-19T10:08:06+08:00">2019-06-19</time>
+              <time title="创建时间：2019-06-19 10:08:06 / 修改时间：11:41:15" itemprop="dateCreated datePublished" datetime="2019-06-19T10:08:06+08:00">2019-06-19</time>
             
 
             
@@ -761,6 +763,18 @@
 <p>^((?!that).)<em>this((?!that).)</em>$</p>
 <p>这4个正则表达式测试上述的几句话，结果都能够满足要求。</p>
 <p>上述4种断言，括号里的pattern本身是一个正则表达式。但对2种后行断言有所限制，在Perl和Python中，这个表达式必须是定长(fixed length)的，即不能使用、+、?等元字符，如(?&lt;=abc)没有问题，但(?&lt;=abc)是不被支持的，特别是当表达式中含有|连接的分支时，各个分支的长度必须相同。之所以不支持变长表达式，是因为当引擎检查后行断言时，无法确定要回溯多少步。Java支持?、{m}、{n,m}等符号，但同样不支持*、+字符。JavaScript干脆不支持后行断言，不过一般来说，这不是太大的问题。</p>
+<h1 id="JAVA-正则三种模式-贪婪-勉强和占有"><a href="#JAVA-正则三种模式-贪婪-勉强和占有" class="headerlink" title="JAVA 正则三种模式: 贪婪, 勉强和占有"></a>JAVA 正则三种模式: 贪婪, 勉强和占有</h1><p>假设待处理的字符串是  xfooxxxxxxfoo</p>
+<p>​    <strong>模式.*foo （贪婪模式）:</strong> </p>
+<p>模式分为子模式p1(.*)和子模式p2(foo)两个部分. 其中p1中的量词匹配方式使用默认方式(贪婪型)。 </p>
+<p>匹配开始时,吃入所有字符xfooxxxxxx去匹配子模式p1。匹配成功,但这样以来就没有了字符串去匹配子模式p2。本轮匹配失败；第二轮：减少p1部分的匹配量，吐出最后一个字符, 把字符串分割成xfooxxxxxxfo和o两个子字符串s1和s2。 s1匹配p1, 但s2不匹配p2。本轮匹配失败；第三轮，再次减少p1部分匹配量，吐出两个字符, 字符串被分割成xfooxxxxxxfo和oo两部分。结果同上。第四轮，再次减少p1匹配量, 字符串分割成xfooxxxxxx和foo两个部分, 这次s1/s2分别和p1/p2匹配。停止尝试,返回匹配成功</p>
+<p><strong>模式.*?foo （勉强模式）:</strong> </p>
+<p>第一次尝试匹配, p1由于是0或任意次，因此被忽略，用字符串去匹配p2,失败；第二次，读入第一个字符x, 尝试和p1匹配, 匹配成功; 字符串剩余部分fooxxxxxxfoo中前三个字符和p2也是匹配的. 因此, 停止尝试, 返回匹配成功。在这种模式下，如果对剩余字符串继续去寻找和模式相匹配的子字符串，还会找到字符串末尾的另一个xfoo，而在贪婪模式下，由于第一次匹配成功的子串就已经是所有字符，因此不存在第二个匹配子串。</p>
+<p> <strong>模式.*+foo （侵占模式）:</strong> </p>
+<p>匹配开始时读入所有字符串, 和p1匹配成功, 但没有剩余字符串去和p2匹配。因此, 匹配失败。返回。</p>
+<p>简单地说, 贪婪模式和占有模式相比, 贪婪模式会在只有部分匹配成功的条件下, 依次从多到少减少匹配成功部分模式的匹配数量, 将字符留给模式其他部分去匹配; 而占用模式则是占有所有能匹配成功部分, 绝不留给其他部分使用。</p>
+<p><strong>再看下面一个例子：贪婪模式与侵占模式的比较</strong><br>正则：\w+[a-z]与\w++[a-z]<br>目标串：232hjdhfd7474$<br>分析：①\w+[a-z]：\w+属于贪婪模式，会一次性吃掉它所能吃掉的所有的字符，也就是子串232hjdhfd7474，此时[a-z]不能够找到匹配了，故\w+匹配的串会吐出一个字符4，但此时还是得不到匹配。反复的这样吐出回退，直到吐出字符d时，此时[a-z]能够匹配h，所以这时正则表达式会返回一次成功的匹配结果，为232hjdhfd</p>
+<p>②\w++[a-z]：\w++属于侵占模式，它会一次性吃掉它所能够吃掉的所有字符，即子串232hjdhfd7474，而且不留给其他部分使用，故不会回退。此时[a-z]不能够找到匹配，所以此次匹配失败。在余下的子串中也找不到能匹配成功的子串。所以整个正则表达式是找不到匹配结果的！</p>
+<p><img src="C:%5CUsers%5CBelief%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1560915651843.png" alt="1560915651843"></p>
 
       
     </div>
@@ -975,7 +989,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达式实例"><span class="nav-number">1.</span> <span class="nav-text">正则表达式实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获组"><span class="nav-number">2.</span> <span class="nav-text">捕获组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">3.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达式语法"><span class="nav-number">4.</span> <span class="nav-text">正则表达式语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Matcher-类的方法"><span class="nav-number">5.</span> <span class="nav-text">Matcher 类的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#索引方法"><span class="nav-number">5.1.</span> <span class="nav-text">索引方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#零宽断言"><span class="nav-number">6.</span> <span class="nav-text">零宽断言</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达式实例"><span class="nav-number">1.</span> <span class="nav-text">正则表达式实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获组"><span class="nav-number">2.</span> <span class="nav-text">捕获组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">3.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达式语法"><span class="nav-number">4.</span> <span class="nav-text">正则表达式语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Matcher-类的方法"><span class="nav-number">5.</span> <span class="nav-text">Matcher 类的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#索引方法"><span class="nav-number">5.1.</span> <span class="nav-text">索引方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#零宽断言"><span class="nav-number">6.</span> <span class="nav-text">零宽断言</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#JAVA-正则三种模式-贪婪-勉强和占有"><span class="nav-number"></span> <span class="nav-text">JAVA 正则三种模式: 贪婪, 勉强和占有</span></a></li></div>
             
 
           </div>
