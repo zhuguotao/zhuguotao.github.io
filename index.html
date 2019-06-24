@@ -455,326 +455,22 @@
       
         
           
-            <p>转自：</p>
-<p><a href="https://www.runoob.com/java/java-regular-expressions.html" target="_blank" rel="noopener">https://www.runoob.com/java/java-regular-expressions.html</a></p>
-<p><a href="https://blog.csdn.net/yb642518034/article/details/61198976" target="_blank" rel="noopener">https://blog.csdn.net/yb642518034/article/details/61198976</a></p>
-<h2 id="正则表达式实例"><a href="#正则表达式实例" class="headerlink" title="正则表达式实例"></a>正则表达式实例</h2><p>一个字符串其实就是一个简单的正则表达式，例如 <strong>Hello World</strong> 正则表达式匹配 “Hello World” 字符串。</p>
-<p><strong>.</strong>（点号）也是一个正则表达式，它匹配任何一个字符如：”a” 或 “1”。</p>
-<p><strong>下表列出了一些正则表达式的实例及描述：</strong></p>
-<table>
-<thead>
-<tr>
-<th><strong>正则表达式</strong></th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>this is text</td>
-<td>匹配字符串 “this is text”</td>
-</tr>
-<tr>
-<td>this\s+is\s+text</td>
-<td>注意字符串中的 <strong>\s+</strong>。<br>匹配单词 “this” 后面的 <strong>\s+</strong> 可以匹配多个空格，之后匹配 is 字符串，再之后 <strong>\s+</strong> 匹配多个空格然后再跟上 text 字符串。<br>可以匹配这个实例：this is text</td>
-</tr>
-<tr>
-<td>^\d+(.\d+)?</td>
-<td>^ 定义了以什么开始<br>\d+ 匹配一个或多个数字<br>? 设置括号内的选项是可选的<br>. 匹配 “.”<br>可以匹配的实例：”5”, “1.5” 和 “2.21”。</td>
-</tr>
-</tbody></table>
-<p>Java 正则表达式和 Perl 的是最为相似的。</p>
-<p><strong>java.util.regex 包主要包括以下三个类：</strong></p>
-<ul>
-<li><p>Pattern 类：</p>
-<p>Pattern 对象是一个正则表达式的编译表示。Pattern 类没有公共构造方法。要创建一个 Pattern 对象，你必须首先调用其公共静态编译方法，它返回一个 Pattern 对象。该方法接受一个正则表达式作为它的第一个参数。</p>
-</li>
-<li><p>Matcher 类：</p>
-<p>Matcher 对象是对输入字符串进行解释和匹配操作的引擎。与Pattern 类一样，Matcher 也没有公共构造方法。你需要调用 Pattern 对象的 matcher 方法来获得一个 Matcher 对象。</p>
-</li>
-<li><p>PatternSyntaxException：</p>
-<p>PatternSyntaxException 是一个非强制异常类，它表示一个正则表达式模式中的语法错误。</p>
-</li>
-</ul>
-<p><strong>以下实例中使用了正则表达式 .*runoob.* 用于查找字符串中是否包了 runoob 子串：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.regex.*;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RegexExample1</span></span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</span><br><span class="line">      String content = <span class="string">"I am noob "</span> +</span><br><span class="line">        <span class="string">"from runoob.com."</span>;</span><br><span class="line"> </span><br><span class="line">      String pattern = <span class="string">".*runoob.*"</span>;</span><br><span class="line"> </span><br><span class="line">      <span class="keyword">boolean</span> isMatch = Pattern.matches(pattern, content);</span><br><span class="line">      System.out.println(<span class="string">"字符串中是否包含了 'runoob' 子字符串? "</span> + isMatch);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>实例输出结果为：</p>
-<blockquote>
-<p>字符串中是否包含了 ‘runoob’ 子字符串? true</p>
-</blockquote>
-<h2 id="捕获组"><a href="#捕获组" class="headerlink" title="捕获组"></a>捕获组</h2><p>捕获组是把多个字符当一个单独单元进行处理的方法，它通过对括号内的字符分组来创建。</p>
-<p>例如，正则表达式 (dog) 创建了单一分组，组里包含”d”，”o”，和”g”。</p>
-<p>捕获组是通过从左至右计算其开括号来编号。例如，在表达式（（A）（B（C））），有四个这样的组：</p>
-<ul>
-<li>((A)(B(C)))</li>
-<li>(A)</li>
-<li>(B(C))</li>
-<li>(C)</li>
-</ul>
-<p>可以通过调用 matcher 对象的 groupCount 方法来查看表达式有多少个分组。groupCount 方法返回一个 int 值，表示matcher对象当前有多个捕获组。</p>
-<p>还有一个特殊的组（group(0)），它总是代表整个表达式。该组不包括在 groupCount 的返回值中。</p>
-<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p><strong>下面的例子说明如何从一个给定的字符串中找到数字串：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.regex.Matcher;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.Pattern;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RegexMatches</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String args[] )</span></span>&#123;</span><br><span class="line"> </span><br><span class="line">      <span class="comment">// 按指定模式在字符串查找</span></span><br><span class="line">      String line = <span class="string">"This order was placed for QT3000! OK?"</span>;</span><br><span class="line">      String pattern = <span class="string">"(\\D*)(\\d+)(.*)"</span>;</span><br><span class="line"> </span><br><span class="line">      <span class="comment">// 创建 Pattern 对象</span></span><br><span class="line">      Pattern r = Pattern.compile(pattern);</span><br><span class="line"> </span><br><span class="line">      <span class="comment">// 现在创建 matcher 对象</span></span><br><span class="line">      Matcher m = r.matcher(line);</span><br><span class="line">      <span class="keyword">if</span> (m.find( )) &#123;</span><br><span class="line">         System.out.println(<span class="string">"Found value: "</span> + m.group(<span class="number">0</span>) );</span><br><span class="line">         System.out.println(<span class="string">"Found value: "</span> + m.group(<span class="number">1</span>) );</span><br><span class="line">         System.out.println(<span class="string">"Found value: "</span> + m.group(<span class="number">2</span>) );</span><br><span class="line">         System.out.println(<span class="string">"Found value: "</span> + m.group(<span class="number">3</span>) ); </span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         System.out.println(<span class="string">"NO MATCH"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>以上实例编译运行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Found value: This order was placed for QT3000! OK?</span><br><span class="line">Found value: This order was placed for QT</span><br><span class="line">Found value: 3000</span><br><span class="line">Found value: ! OK?</span><br></pre></td></tr></table></figure>
-
-<h2 id="正则表达式语法"><a href="#正则表达式语法" class="headerlink" title="正则表达式语法"></a>正则表达式语法</h2><p>在其他语言中，<strong>\</strong> 表示：<strong>我想要在正则表达式中插入一个普通的（字面上的）反斜杠，请不要给它任何特殊的意义。</strong></p>
-<p>在 Java 中，<strong>\</strong> 表示：<strong>我要插入一个正则表达式的反斜线，所以其后的字符具有特殊的意义。</strong></p>
-<p>所以，在其他的语言中（如Perl），一个反斜杠 <strong>\</strong> 就足以具有转义的作用，而在 Java 中正则表达式中则需要有两个反斜杠才能被解析为其他语言中的转义作用。也可以简单的理解在 Java 的正则表达式中，两个 <strong>\</strong> 代表其他语言中的一个 <strong>\</strong>，这也就是为什么表示一位数字的正则表达式是 <strong>\d</strong>，而表示一个普通的反斜杠是 <strong>\\</strong>。</p>
-<table>
-<thead>
-<tr>
-<th>字符</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>\</td>
-<td>将下一字符标记为特殊字符、文本、反向引用或八进制转义符。<br>例如，”n”匹配字符”n”。”\n”匹配换行符。序列”\\“匹配”\“，”\(“匹配”(“。</td>
-</tr>
-<tr>
-<td>^</td>
-<td>匹配输入字符串开始的位置。如果设置了 <strong>RegExp</strong> 对象的 <strong>Multiline</strong> 属性<br>，^ 还会与”\n”或”\r”之后的位置匹配。</td>
-</tr>
-<tr>
-<td>$</td>
-<td>匹配输入字符串结尾的位置。如果设置了 <strong>RegExp</strong> 对象的 <strong>Multiline</strong> 属性<br>，$ 还会与”\n”或”\r”之前的位置匹配。</td>
-</tr>
-<tr>
-<td>*</td>
-<td>零次或多次匹配前面的字符或子表达式。例如，zo* 匹配”z”和”zoo”。* 等效于 {0,}。</td>
-</tr>
-<tr>
-<td>+</td>
-<td>一次或多次匹配前面的字符或子表达式。例如，”zo+”与”zo”和”zoo”匹配，<br>但与”z”不匹配。+ 等效于 {1,}。</td>
-</tr>
-<tr>
-<td>?</td>
-<td>零次或一次匹配前面的字符或子表达式。例如，”do(es)?”匹配”do”或”does”<br>中的”do”。? 等效于 {0,1}。</td>
-</tr>
-<tr>
-<td>{<em>n</em>}</td>
-<td><em>n</em> 是非负整数。正好匹配 <em>n</em> 次。例如，”o{2}”与”Bob”中的”o”不匹配，但与”food”中的两个”o”匹配。</td>
-</tr>
-<tr>
-<td>{<em>n</em>,}</td>
-<td><em>n</em> 是非负整数。至少匹配 <em>n</em> 次。例如，”o{2,}”不匹配”Bob”中的”o”，而匹配”foooood”中的所有 o。”o{1,}”等效于”o+”。”o{0,}”等效于”o*”。</td>
-</tr>
-<tr>
-<td>{<em>n</em>,<em>m</em>}</td>
-<td><em>m</em> 和 <em>n</em> 是非负整数，其中 <em>n</em> &lt;= <em>m</em>。匹配至少 <em>n</em> 次，至多 <em>m</em> 次。例如，”o{1,3}”匹配”fooooood”中的头三个 o。’o{0,1}’ 等效于 ‘o?’。注意：您不能将空格插入逗号和数字之间。</td>
-</tr>
-<tr>
-<td>?</td>
-<td>当此字符紧随任何其他限定符（<em>、+、?、{</em>n<em>}、{</em>n<em>,}、{</em>n<em>,</em>m*}）之后时，匹配模式是”非贪心的”。”非贪心的”模式匹配搜索到的、尽可能短的字符串，而默认的”贪心的”模式匹配搜索到的、尽可能长的字符串。例如，在字符串”oooo”中，”o+?”只匹配单个”o”，而”o+”匹配所有”o”。</td>
-</tr>
-<tr>
-<td>.</td>
-<td>匹配除”\r\n”之外的任何单个字符。若要匹配包括”\r\n”在内的任意字符，请使用诸如”[\s\S]”之类的模式。</td>
-</tr>
-<tr>
-<td>(<em>pattern</em>)</td>
-<td>匹配 <em>pattern</em> 并捕获该匹配的子表达式。可以使用 <strong>$0…$9</strong> 属性从结果”匹配”集合中检索捕获的匹配。若要匹配括号字符 ( )，请使用”(“或者”)“。</td>
-</tr>
-<tr>
-<td>(?:<em>pattern</em>)</td>
-<td>匹配 <em>pattern</em> 但不捕获该匹配的子表达式，即它是一个非捕获匹配，不存储供以后使用的匹配。这对于用”or”字符 (|) 组合模式部件的情况很有用。例如，’industr(?:y|ies) 是比 ‘industry|industries’ 更经济的表达式。</td>
-</tr>
-<tr>
-<td>(?=<em>pattern</em>)</td>
-<td>执行正向预测先行搜索的子表达式，该表达式匹配处于匹配 <em>pattern</em> 的字符串的起始点的字符串。它是一个非捕获匹配，即不能捕获供以后使用的匹配。例如，’Windows (?=95|98|NT|2000)’ 匹配”Windows 2000”中的”Windows”，但不匹配”Windows 3.1”中的”Windows”。预测先行不占用字符，即发生匹配后，下一匹配的搜索紧随上一匹配之后，而不是在组成预测先行的字符后。</td>
-</tr>
-<tr>
-<td>(?!<em>pattern</em>)</td>
-<td>执行反向预测先行搜索的子表达式，该表达式匹配不处于匹配 <em>pattern</em> 的字符串的起始点的搜索字符串。它是一个非捕获匹配，即不能捕获供以后使用的匹配。例如，’Windows (?!95|98|NT|2000)’ 匹配”Windows 3.1”中的 “Windows”，但不匹配”Windows 2000”中的”Windows”。预测先行不占用字符，即发生匹配后，下一匹配的搜索紧随上一匹配之后，而不是在组成预测先行的字符后。</td>
-</tr>
-<tr>
-<td><em>x</em>|<em>y</em></td>
-<td>匹配 <em>x</em> 或 <em>y</em>。例如，’z|food’ 匹配”z”或”food”。’(z|f)ood’ 匹配”zood”或”food”。</td>
-</tr>
-<tr>
-<td>[<em>xyz</em>]</td>
-<td>字符集。匹配包含的任一字符。例如，”[abc]”匹配”plain”中的”a”。</td>
-</tr>
-<tr>
-<td>[^<em>xyz</em>]</td>
-<td>反向字符集。匹配未包含的任何字符。例如，”[^abc]”匹配”plain”中”p”，”l”，”i”，”n”。</td>
-</tr>
-<tr>
-<td>[<em>a-z</em>]</td>
-<td>字符范围。匹配指定范围内的任何字符。例如，”[a-z]”匹配”a”到”z”范围内的任何小写字母。</td>
-</tr>
-<tr>
-<td>[^<em>a-z</em>]</td>
-<td>反向范围字符。匹配不在指定的范围内的任何字符。例如，”[^a-z]”匹配任何不在”a”到”z”范围内的任何字符。</td>
-</tr>
-<tr>
-<td>\b</td>
-<td>匹配一个字边界，即字与空格间的位置。例如，”er\b”匹配”never”中的”er”，但不匹配”verb”中的”er”。</td>
-</tr>
-<tr>
-<td>\B</td>
-<td>非字边界匹配。”er\B”匹配”verb”中的”er”，但不匹配”never”中的”er”。</td>
-</tr>
-<tr>
-<td>\c<em>x</em></td>
-<td>匹配 <em>x</em> 指示的控制字符。例如，\cM 匹配 Control-M 或回车符。<em>x</em> 的值必须在 A-Z 或 a-z 之间。如果不是这样，则假定 c 就是”c”字符本身。</td>
-</tr>
-<tr>
-<td>\d</td>
-<td>数字字符匹配。等效于 [0-9]。</td>
-</tr>
-<tr>
-<td>\D</td>
-<td>非数字字符匹配。等效于 [^0-9]。</td>
-</tr>
-<tr>
-<td>\f</td>
-<td>换页符匹配。等效于 \x0c 和 \cL。</td>
-</tr>
-<tr>
-<td>\n</td>
-<td>换行符匹配。等效于 \x0a 和 \cJ。</td>
-</tr>
-<tr>
-<td>\r</td>
-<td>匹配一个回车符。等效于 \x0d 和 \cM。</td>
-</tr>
-<tr>
-<td>\s</td>
-<td>匹配任何空白字符，包括空格、制表符、换页符等。与 [ \f\n\r\t\v] 等效。</td>
-</tr>
-<tr>
-<td>\S</td>
-<td>匹配任何非空白字符。与 [^ \f\n\r\t\v] 等效。</td>
-</tr>
-<tr>
-<td>\t</td>
-<td>制表符匹配。与 \x09 和 \cI 等效。</td>
-</tr>
-<tr>
-<td>\v</td>
-<td>垂直制表符匹配。与 \x0b 和 \cK 等效。</td>
-</tr>
-<tr>
-<td>\w</td>
-<td>匹配任何字类字符，包括下划线。与”[A-Za-z0-9_]”等效。</td>
-</tr>
-<tr>
-<td>\W</td>
-<td>与任何非单词字符匹配。与”[^A-Za-z0-9_]”等效。</td>
-</tr>
-<tr>
-<td>\x<em>n</em></td>
-<td>匹配 <em>n</em>，此处的 <em>n</em> 是一个十六进制转义码。十六进制转义码必须正好是两位数长。例如，”\x41”匹配”A”。”\x041”与”\x04”&amp;”1”等效。允许在正则表达式中使用 ASCII 代码。</td>
-</tr>
-<tr>
-<td>\num</td>
-<td>匹配 <em>num</em>，此处的 <em>num</em> 是一个正整数。到捕获匹配的反向引用。例如，”(.)\1”匹配两个连续的相同字符。</td>
-</tr>
-<tr>
-<td>\n</td>
-<td>标识一个八进制转义码或反向引用。如果 \n 前面至少有 <em>n</em> 个捕获子表达式，那么 <em>n</em> 是反向引用。否则，如果 <em>n</em> 是八进制数 (0-7)，那么 <em>n</em>是八进制转义码。</td>
-</tr>
-<tr>
-<td>\nm</td>
-<td>标识一个八进制转义码或反向引用。如果 \nm 前面至少有 <em>nm</em> 个捕获子表达式，那么 <em>nm</em> 是反向引用。如果 \nm 前面至少有 <em>n</em> 个捕获，则 <em>n</em> 是反向引用，后面跟有字符 <em>m</em>。如果两种前面的情况都不存在，则\nm 匹配八进制值 <em>nm</em>，其中 <em>n</em> 和 <em>m</em> 是八进制数字 (0-7)。</td>
-</tr>
-<tr>
-<td>\nml</td>
-<td>当 <em>n</em> 是八进制数 (0-3)，<em>m</em> 和 <em>l</em> 是八进制数 (0-7) 时，匹配八进制转义码 <em>nml</em>。</td>
-</tr>
-<tr>
-<td>\u<em>n</em></td>
-<td>匹配 <em>n</em>，其中 <em>n</em> 是以四位十六进制数表示的 Unicode 字符。例如，\u00A9 匹配版权符号 (©)。</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>根据 Java Language Specification 的要求，Java 源代码的字符串中的反斜线被解释为 Unicode 转义或其他字符转义。因此必须在字符串字面值中使用两个反斜线，表示正则表达式受到保护，不被 Java 字节码编译器解释。例如，当解释为正则表达式时，字符串字面值 “\b” 与单个退格字符匹配，而 “\b” 与单词边界匹配。字符串字面值 “(hello)“ 是非法的，将导致编译时错误；要与字符串 (hello) 匹配，必须使用字符串字面值 “\(hello\)”。</p>
-</blockquote>
-<h2 id="Matcher-类的方法"><a href="#Matcher-类的方法" class="headerlink" title="Matcher 类的方法"></a>Matcher 类的方法</h2><h3 id="索引方法"><a href="#索引方法" class="headerlink" title="索引方法"></a>索引方法</h3><table>
-<thead>
-<tr>
-<th>方法</th>
-<th><strong>说明</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>public String getDescription()</strong></td>
-<td>获取错误的描述。</td>
-</tr>
-<tr>
-<td><strong>public int getIndex()</strong></td>
-<td>获取错误的索引。</td>
-</tr>
-<tr>
-<td><strong>public String getPattern()</strong></td>
-<td>获取错误的正则表达式模式。</td>
-</tr>
-<tr>
-<td><strong>public String getMessage()</strong></td>
-<td>返回多行字符串，包含语法错误及其索引的描述、错误的正则表达式<br>模式和模式中错误索引的可视化指示。</td>
-</tr>
-</tbody></table>
-<h2 id="零宽断言"><a href="#零宽断言" class="headerlink" title="零宽断言"></a>零宽断言</h2><p>零宽断言用来匹配某个位置前后的字符串是否能够匹配一个子表达式，零宽：即本宽度为零，本身不占匹配位置</p>
-<p><strong>正则表达式的先行断言和后行断言一共有4种形式：</strong></p>
-<ul>
-<li>(?=pattern) 零宽正向先行断言(zero-width positive lookahead assertion)</li>
-<li>(?!pattern) 零宽负向先行断言(zero-width negative lookahead assertion)</li>
-<li>(?&lt;=pattern) 零宽正向后行断言(zero-width positive lookbehind assertion)</li>
-<li>(?&lt;!pattern) 零宽负向后行断言(zero-width negative lookbehind assertion)</li>
-<li>这里面的pattern是一个正则表达式。</li>
-</ul>
-<p>如同^代表开头，$代表结尾，\b代表单词边界一样，先行断言和后行断言也有类似的作用，它们只匹配某些位置，在匹配过程中，不占用字符，所以被称为“零宽”。所谓位置，是指字符串中(每行)第一个字符的左边、最后一个字符的右边以及相邻字符的中间（假设文字方向是头左尾右）。</p>
-<p><strong>下面分别举例来说明这4种断言的含义。</strong></p>
-<blockquote>
-<p><strong>(?=pattern) 正向先行断言</strong></p>
-</blockquote>
-<p>代表字符串中的一个位，<strong>紧接该位置之后</strong>的字符序列<strong>能够匹配</strong>pattern。<br>例如对”a regular expression”这个字符串，要想匹配<strong>re</strong>gular中的re，但不能匹配expression中的re，可以用”re(?=gular)”，该表达式限定了re右边的位置，这个位置之后是gular，但并不消耗gular这些字符，将表达式改为”re(?=gular).”，将会匹配reg，元字符.匹配了g，括号这一砣匹配了e和g之间的位置。</p>
-<blockquote>
-<p><strong>(?!pattern) 负向先行断言</strong></p>
-</blockquote>
-<p>代表字符串中的一个位置，<strong>紧接该位置之后</strong>的字符序列<strong>不能匹配</strong>pattern。<br>例如对”regex represents regular expression”这个字符串，要想匹配除<strong>re</strong>gex和<strong>re</strong>gular之外的re，可以用”re(?!g)”，该表达式限定了re右边的位置，这个位置后面不是字符g。负向和正向的区别，就在于该位置之后的字符能否匹配括号中的表达式。</p>
-<blockquote>
-<p><strong>(?&lt;=pattern) 正向后行断言</strong></p>
-</blockquote>
-<p>代表字符串中的一个位置，<strong>紧接该位置之前</strong>的字符序列<strong>能够匹配</strong>pattern。<br>例如对”regex represents regular expression”这个字符串，有4个单词，要想匹配单词内部的re，但不匹配单词开头的re，可以用”(?&lt;=\w)re”，单词内部的re，在re前面应该是一个单词字符。之所以叫后行断言，是因为正则表达式引擎在匹配字符串和表达式时，是从前向后逐个扫描字符串中的字符，并判断是否与表达式符合，当在表达式中遇到该断言时，正则表达式引擎需要往字符串前端检测已扫描过的字符，相对于扫描方向是向后的。</p>
-<blockquote>
-<p><strong>(?&lt;!pattern) 负向后行断言</strong></p>
-</blockquote>
-<p>代表字符串中的一个位置，<strong>紧接该位置之前</strong>的字符序列<strong>不能匹配</strong>pattern。<br>例如对”regex represents regular expression”这个字符串，要想匹配单词开头的re，可以用”(?&lt;!\w)re”。单词开头的re，在本例中，也就是指不在单词内部的re，即re前面不是单词字符。当然也可以用”\bre”来匹配。</p>
-<p><strong>对于这4个断言的理解，可以从两个方面入手：</strong></p>
-<p><strong>1.关于先行(lookahead)和后行(lookbehind)：</strong>正则表达式引擎在执行字符串和表达式匹配时，会从头到尾（从前到后）连续扫描字符串中的字符，设想有一个扫描指针指向字符边界处并随匹配过程移动。先行断言，是当扫描指针位于某处时，引擎会尝试匹配指针还未扫过的字符，先于指针到达该字符，故称为先行。后行断言，引擎会尝试匹配指针已扫过的字符，后于指针到达该字符，故称为后行。</p>
-<p><strong>2.关于正向(positive)和负向(negative)：</strong>正向就表示匹配括号中的表达式，负向表示不匹配。</p>
-<p><strong>对这4个断言形式的记忆：</strong></p>
-<p>1.先行和后行：后行断言(?&lt;=pattern)、(?&lt;!pattern)中，有个小于号，同时也是箭头，对于自左至右的文本方向，这个箭头是指向后的，这也比较符合我们的习惯。把小于号去掉，就是先行断言。</p>
-<p>2.正向和负向：不等于(!=)、逻辑非(!)都是用!号来表示，所以有!号的形式表示不匹配、负向；将!号换成=号，就表示匹配、正向。</p>
-<p>我们经常用正则表达式来检测一个字符串中包含某个子串，要表示一个字符串中不包含某个字符或某些字符也很容易，用[^…]形式就可以了。要表示一个字符串中不包含某个子串（由字符序列构成）呢？<br>用[^…]这种形式就不行了，这时就要用到（负向）先行断言或后行断言、或同时使用。<br>例如判断一句话中包含this，但不包含that。</p>
-<p>包含this比较好办，一句话中不包含that，可以认为这句话中每个字符的前面都不是that或每个字符的后面都不是that。正则表达式如下：</p>
-<p>^((?&lt;!that).)<em>this((?&lt;!that).)</em>$ 或 ^(.(?!that))<em>this(.(?!that))</em>$
-对于”this is the case”这句话，两个表达式都能够匹配成功，而”note that this is the case”都匹配失败。</p>
-<p>在一般情况下，这两个表达式基本上都能够满足要求了。考虑极端情况，如一句话以that开头、以that结尾、that和this连在一起时，上述表达式就可能不胜任了。</p>
-<p>如”note thatthis is the case”或者”this is the case, not that”等。</p>
-<p>只要灵活运用这几个断言，就很容易解决：</p>
-<p>^(.(?&lt;!that))<em>this(.(?&lt;!that))</em>$</p>
-<p>^(.(?&lt;!that))<em>this((?!that).)</em>$</p>
-<p>^((?!that).)<em>this(.(?&lt;!that))</em>$</p>
-<p>^((?!that).)<em>this((?!that).)</em>$</p>
-<p>这4个正则表达式测试上述的几句话，结果都能够满足要求。</p>
-<p>上述4种断言，括号里的pattern本身是一个正则表达式。但对2种后行断言有所限制，在Perl和Python中，这个表达式必须是定长(fixed length)的，即不能使用、+、?等元字符，如(?&lt;=abc)没有问题，但(?&lt;=abc)是不被支持的，特别是当表达式中含有|连接的分支时，各个分支的长度必须相同。之所以不支持变长表达式，是因为当引擎检查后行断言时，无法确定要回溯多少步。Java支持?、{m}、{n,m}等符号，但同样不支持*、+字符。JavaScript干脆不支持后行断言，不过一般来说，这不是太大的问题。</p>
-<h2 id="JAVA-正则三种模式-贪婪-勉强和占有"><a href="#JAVA-正则三种模式-贪婪-勉强和占有" class="headerlink" title="JAVA 正则三种模式: 贪婪, 勉强和占有"></a>JAVA 正则三种模式: 贪婪, 勉强和占有</h2><p>假设待处理的字符串是  xfooxxxxxxfoo</p>
-<p>​    <strong>模式.*foo （贪婪模式）:</strong> </p>
-<p>模式分为子模式p1(.*)和子模式p2(foo)两个部分. 其中p1中的量词匹配方式使用默认方式(贪婪型)。 </p>
-<p>匹配开始时,吃入所有字符xfooxxxxxx去匹配子模式p1。匹配成功,但这样以来就没有了字符串去匹配子模式p2。本轮匹配失败；第二轮：减少p1部分的匹配量，吐出最后一个字符, 把字符串分割成xfooxxxxxxfo和o两个子字符串s1和s2。 s1匹配p1, 但s2不匹配p2。本轮匹配失败；第三轮，再次减少p1部分匹配量，吐出两个字符, 字符串被分割成xfooxxxxxxfo和oo两部分。结果同上。第四轮，再次减少p1匹配量, 字符串分割成xfooxxxxxx和foo两个部分, 这次s1/s2分别和p1/p2匹配。停止尝试,返回匹配成功</p>
-<p><strong>模式.*?foo （勉强模式）:</strong> </p>
-<p>第一次尝试匹配, p1由于是0或任意次，因此被忽略，用字符串去匹配p2,失败；第二次，读入第一个字符x, 尝试和p1匹配, 匹配成功; 字符串剩余部分fooxxxxxxfoo中前三个字符和p2也是匹配的. 因此, 停止尝试, 返回匹配成功。在这种模式下，如果对剩余字符串继续去寻找和模式相匹配的子字符串，还会找到字符串末尾的另一个xfoo，而在贪婪模式下，由于第一次匹配成功的子串就已经是所有字符，因此不存在第二个匹配子串。</p>
-<p> <strong>模式.*+foo （侵占模式）:</strong> </p>
-<p>匹配开始时读入所有字符串, 和p1匹配成功, 但没有剩余字符串去和p2匹配。因此, 匹配失败。返回。</p>
-<p>简单地说, 贪婪模式和占有模式相比, 贪婪模式会在只有部分匹配成功的条件下, 依次从多到少减少匹配成功部分模式的匹配数量, 将字符留给模式其他部分去匹配; 而占用模式则是占有所有能匹配成功部分, 绝不留给其他部分使用。</p>
-<p><strong>再看下面一个例子：贪婪模式与侵占模式的比较</strong><br>正则：\w+[a-z]与\w++[a-z]<br>目标串：232hjdhfd7474$<br>分析：①\w+[a-z]：\w+属于贪婪模式，会一次性吃掉它所能吃掉的所有的字符，也就是子串232hjdhfd7474，此时[a-z]不能够找到匹配了，故\w+匹配的串会吐出一个字符4，但此时还是得不到匹配。反复的这样吐出回退，直到吐出字符d时，此时[a-z]能够匹配h，所以这时正则表达式会返回一次成功的匹配结果，为232hjdhfd</p>
-<p>②\w++[a-z]：\w++属于侵占模式，它会一次性吃掉它所能够吃掉的所有字符，即子串232hjdhfd7474，而且不留给其他部分使用，故不会回退。此时[a-z]不能够找到匹配，所以此次匹配失败。在余下的子串中也找不到能匹配成功的子串。所以整个正则表达式是找不到匹配结果的！</p>
-
+            <p>
+              转自：
+https://www.runoob.com/java/java-regular-expressions.html
+https://blog.csdn.net/yb642518034/article/details/61198976
+正则表达式实例一个字符串其实就是一个简单的正则表达式，例如
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/06/19/java-regex-detail/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -945,118 +641,30 @@
       
         
           
-            <p>cron表达式用于配置cronTrigger的实例。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔。</p>
-<ol>
-<li>Seconds （秒）</li>
-<li>Minutes（分）</li>
-<li>Hours（小时）</li>
-<li>Day-of-Month  （天）</li>
-<li>Month（月）</li>
-<li>Day-of-Week （周）</li>
-<li>Year（年）</li>
-</ol>
-<blockquote>
-<p>例：”0 0 12 ? * WED” 意思是：每个星期三的中午12点执行。</p>
-</blockquote>
-<p>个别子表达式可以包含范围或者列表。例如：上面例子中的WED可以换成”MON-FRI”，”MON,WED,FRI”，甚至”MON-WED,SAT”。</p>
-<p><strong>子表达式范围</strong>：</p>
-<ol>
-<li>Seconds (0~59)</li>
-<li>Minutes (0~59)</li>
-<li>Hours (0~23)</li>
-<li>Day-of-Month (1~31,但是要注意有些月份没有31天)</li>
-<li>Month (0~11，或者”JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV,DEC”)</li>
-<li>Day-of-Week (1~7,1=SUN 或者”SUN, MON, TUE, WED, THU, FRI, SAT”)</li>
-<li>Year (1970~2099)</li>
-</ol>
-<p><strong>Cron表达式的格式：秒 分 时 日 月 周 年(可选)。</strong></p>
-<table>
-<thead>
-<tr>
-<th>字段名</th>
-<th>允许的值</th>
-<th>允许的特殊字符</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>秒</td>
-<td>0-59</td>
-<td>, - * /</td>
-</tr>
-<tr>
-<td>分</td>
-<td>0-59</td>
-<td>, - * /</td>
-</tr>
-<tr>
-<td>小时</td>
-<td>0-23</td>
-<td>, - * /</td>
-</tr>
-<tr>
-<td>日</td>
-<td>1-31</td>
-<td>, - * ? / L W C</td>
-</tr>
-<tr>
-<td>月</td>
-<td>1-12 or JAN-DEC</td>
-<td>, - * /</td>
-</tr>
-<tr>
-<td>周几</td>
-<td>1-7 or SUN-SAT</td>
-<td>, - * ? / L C #</td>
-</tr>
-<tr>
-<td>年(可选字段)</td>
-<td>1970-2099</td>
-<td>, - * /</td>
-</tr>
-</tbody></table>
-<p><strong>字符含义</strong>：</p>
-<p><em>**** ：代表所有可能的值。因此，“</em>”在Month中表示每个月，在Day-of-Month中表示每天，在Hours表示每小时</p>
-<p><strong>-</strong> ：表示指定范围。</p>
-<p><strong>,</strong> ：表示列出枚举值。例如：在Minutes子表达式中，“5,20”表示在5分钟和20分钟触发。</p>
-<p><strong>/</strong> ：被用于指定增量。例如：在Minutes子表达式中，“0/15”表示从0分钟开始，每15分钟执行一次。”3/20”表示从第三分钟开始，每20分钟执行一次。和”3,23,43”（表示第3，23，43分钟触发）的含义一样。</p>
-<p><strong>?</strong> ：用在Day-of-Month和Day-of-Week中，指“没有具体的值”。当两个子表达式其中一个被指定了值以后，为了避免冲突，需要将另外一个的值设为“?”。例如：想在每月20日触发调度，不管20号是星期几，只能用如下写法：0 0 0 20 * ?，其中最后以为只能用“?”，而不能用“*”。</p>
-<p><strong>L</strong> ：用在day-of-month和day-of-week字串中。它是单词“last”的缩写。它在两个子表达式中的含义是不同的。</p>
-<p>在day-of-month中，“L”表示一个月的最后一天，一月31号，3月30号。</p>
-<p>在day-of-week中，“L”表示一个星期的最后一天，也就是“7”或者“SAT”</p>
-<p>如果“L”前有具体内容，它就有其他的含义了。例如：“6L”表示这个月的倒数第六天。“FRIL”表示这个月的最后一个星期五。</p>
-<blockquote>
-<p>注意：在使用“L”参数时，不要指定列表或者范围，这样会出现问题。</p>
-</blockquote>
-<p><strong>W</strong> ：“Weekday”的缩写。只能用在day-of-month字段。用来描叙最接近指定天的工作日（周一到周五）。例如：在day-of-month字段用“15W”指“最接近这个月第15天的工作日”，即如果这个月第15天是周六，那么触发器将会在这个月第14天即周五触发；如果这个月第15天是周日，那么触发器将会在这个月第 16天即周一触发；如果这个月第15天是周二，那么就在触发器这天触发。注意一点：这个用法只会在当前月计算值，不会越过当前月。“W”字符仅能在 day-of-month指明一天，不能是一个范围或列表。也可以用“LW”来指定这个月的最后一个工作日，即最后一个星期五。</p>
-<p><strong>#</strong> ：只能用在day-of-week字段。用来指定这个月的第几个周几。例：在day-of-week字段用”6#3” or “FRI#3”指这个月第3个周五（6指周五，3指第3个）。如果指定的日期不存在，触发器就不会触发。</p>
-<p><strong>表达式例子：</strong></p>
-<p>0 * * * * ? 每1分钟触发一次</p>
-<p>0 0 * * * ? 每天每1小时触发一次</p>
-<p>0 0 10 * * ? 每天10点触发一次</p>
-<p>0 * 14 * * ? 在每天下午2点到下午2:59期间的每1分钟触发 </p>
-<p>0 30 9 1 * ? 每月1号上午9点半</p>
-<p>0 15 10 15 * ? 每月15日上午10:15触发</p>
-<p>*/5 * * * * ? 每隔5秒执行一次</p>
-<p>0 */1 * * * ? 每隔1分钟执行一次</p>
-<p>0 0 5-15 * * ? 每天5-15点整点触发</p>
-<p>0 0/3 * * * ? 每三分钟触发一次</p>
-<p>0 0-5 14 * * ? 在每天下午2点到下午2:05期间的每1分钟触发 </p>
-<p>0 0/5 14 * * ? 在每天下午2点到下午2:55期间的每5分钟触发</p>
-<p>0 0/5 14,18 * * ? 在每天下午2点到2:55期间和下午6点到6:55期间的每5分钟触发</p>
-<p>0 0/30 9-17 * * ? 朝九晚五工作时间内每半小时</p>
-<p>0 0 10,14,16 * * ? 每天上午10点，下午2点，4点 </p>
-<p>0 0 12 ? * WED 表示每个星期三中午12点</p>
-<p>0 0 17 ? * TUES,THUR,SAT 每周二、四、六下午五点</p>
-<p>0 10,44 14 ? 3 WED 每年三月的星期三的下午2:10和2:44触发 </p>
-<p>0 15 10 ? * MON-FRI 周一至周五的上午10:15触发</p>
-<p>0 0 23 L * ? 每月最后一天23点执行一次</p>
-<p>0 15 10 L * ? 每月最后一日的上午10:15触发 </p>
-<p>0 15 10 ? * 6L 每月的最后一个星期五上午10:15触发 </p>
-<p>0 15 10 * * ? 2005 2005年的每天上午10:15触发 </p>
-<p>0 15 10 ? * 6L 2002-2005 2002年至2005年的每月的最后一个星期五上午10:15触发 </p>
-<p>0 15 10 ? * 6#3 每月的第三个星期五上午10:15触发</p>
+            <p>
+              cron表达式用于配置cronTrigger的实例。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔。
 
+Seconds （秒）
+Minutes（分）
+Hours（小时）
+Day-of-Month  （天）
+Month（月）
+Day-of-Week （周）
+Year（年）
+
+
+例：
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/06/18/cron-expression/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -1215,25 +823,23 @@
       
         
           
-            <p>阿里云Linux安装镜像源地址：<a href="http://mirrors.aliyun.com/" target="_blank" rel="noopener">http://mirrors.aliyun.com/</a></p>
-<h3 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h3><p>备份你的原镜像文件，以免出错后可以恢复。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backups</span><br></pre></td></tr></table></figure>
+            <p>
+              阿里云Linux安装镜像源地址：http://mirrors.aliyun.com/
+第一步备份你的原镜像文件，以免出错后可以恢复。
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backups
 
-<h3 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h3><p>下载新的CentOS-Base.repo 到 /etc/yum.repos.d/</p>
-<p>CentOS 5</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-5.repo</span><br></pre></td></tr></table></figure>
-
-<p>CentOS 6</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</span><br></pre></td></tr></table></figure>
-
-<p>CentOS 7</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br></pre></td></tr></table></figure>
-
-<h3 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h3><p>运行yum makecache生成缓存</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum clean all</span><br><span class="line">yum makecache</span><br></pre></td></tr></table></figure>
-
-
+第二步
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/06/18/modifly-centos-yum-source/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -1370,21 +976,19 @@
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+            <p>
+              Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in 
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/06/17/hello-world/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
