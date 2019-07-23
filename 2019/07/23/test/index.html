@@ -104,13 +104,13 @@
 <meta property="og:site_name" content="朱国涛的博客">
 <meta property="og:description" content="（转载自网络）本篇进行Spring-data-jpa的介绍，几乎涵盖该框架的所有方面，在日常的开发当中，基本上能满足所有需求。这里不讲解JPA和Spring-data-jpa单独使用，所有的内容都是在和Spring整合的环境中实现。如果需要了解该框架的入门，百度一下，很多入门的介绍。在这篇文章的接下来一篇，会有一个系列来讲解mybatis，这个系列从mybatis的入门开始，到基本使用，和spri">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://zhuguotao.com/.com//E:%5Chexo%5Csource_posts%5Ctest%5CSouthEast">
+<meta property="og:image" content="http://zhuguotao.com/.com//E:%5Chexo%5Csource_posts%5Ctest%5Cuser-table.jpg">
 <meta property="og:image" content="http://zhuguotao.com/.com//E:%5Chexo%5Csource_posts%5Ctest%5Cjpafunction.jpg">
-<meta property="og:updated_time" content="2019-07-23T02:46:18.282Z">
+<meta property="og:updated_time" content="2019-07-23T02:48:48.934Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringData Jpa复杂查询，包括多表关联，分页，排序等">
 <meta name="twitter:description" content="（转载自网络）本篇进行Spring-data-jpa的介绍，几乎涵盖该框架的所有方面，在日常的开发当中，基本上能满足所有需求。这里不讲解JPA和Spring-data-jpa单独使用，所有的内容都是在和Spring整合的环境中实现。如果需要了解该框架的入门，百度一下，很多入门的介绍。在这篇文章的接下来一篇，会有一个系列来讲解mybatis，这个系列从mybatis的入门开始，到基本使用，和spri">
-<meta name="twitter:image" content="http://zhuguotao.com/.com//E:%5Chexo%5Csource_posts%5Ctest%5CSouthEast">
+<meta name="twitter:image" content="http://zhuguotao.com/.com//E:%5Chexo%5Csource_posts%5Ctest%5Cuser-table.jpg">
 
 
 
@@ -401,7 +401,7 @@
                 
               
 
-              <time title="创建时间：2019-07-23 10:19:23 / 修改时间：10:46:18" itemprop="dateCreated datePublished" datetime="2019-07-23T10:19:23+08:00">2019-07-23</time>
+              <time title="创建时间：2019-07-23 10:19:23 / 修改时间：10:48:48" itemprop="dateCreated datePublished" datetime="2019-07-23T10:19:23+08:00">2019-07-23</time>
             
 
             
@@ -492,7 +492,7 @@
 <p>我们可以看到这个类是实现了JpaRepository接口的，事实上如果我们按照上面的配置，在同一个包下面有UserRepository，但是没有UserRepositoryImpl这个类的话，在运行时期UserRepository这个接口的实现就是上面的SimpleJpaRepository这个接口。而如果有UserRepositoryImpl这个文件的话，那么UserRepository的实现类就是UserRepositoryImpl，而UserRepositoryImpl这个类又是SimpleJpaRepository的子类，如此一来就很好的解决了上面的这个不用写implements的问题。我们通过阅读这个类的源代码可以发现，里面包装了entityManager，底层的调用关系还是entityManager在进行CRUD。</p>
 <p>　　3. 下面我们通过一个完整的项目来基本使用spring-data-jpa，然后我们在介绍他的高级用法。</p>
 <p>　　a.数据库建表：user,主键自增</p>
-<p><img src="/.com//E:%5Chexo%5Csource_posts%5Ctest%5CSouthEast" alt></p>
+<p><img src="/.com//E:%5Chexo%5Csource_posts%5Ctest%5Cuser-table.jpg" alt="user表"></p>
 <p>b.对应实体：User</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"user"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue</span>(strategy = GenerationType.IDENTITY)</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="keyword">private</span> String birthday;</span><br><span class="line">    <span class="comment">// getter,setter</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
