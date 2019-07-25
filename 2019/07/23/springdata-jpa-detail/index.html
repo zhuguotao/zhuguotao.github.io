@@ -105,10 +105,8 @@
 <meta property="og:description" content="（转载自网络）本篇进行Spring-data-jpa的介绍，几乎涵盖该框架的所有方面，在日常的开发当中，基本上能满足所有需求。这里不讲解JPA和Spring-data-jpa单独使用，所有的内容都是在和Spring整合的环境中实现。如果需要了解该框架的入门，百度一下，很多入门的介绍。在这篇文章的接下来一篇，会有一个系列来讲解mybatis，这个系列从mybatis的入门开始，到基本使用，和spri">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://zhuguotao.com/2019/07/23/springdata-jpa-detail/user-table.jpg">
-<meta property="og:image" content="http://zhuguotao.com/2019/07/23/springdata-jpa-detail/springdata-jpa-detail/user-table.jpg">
 <meta property="og:image" content="http://zhuguotao.com/2019/07/23/springdata-jpa-detail/jpafunction.jpg">
-<meta property="og:image" content="http://zhuguotao.com/2019/07/23/springdata-jpa-detail/springdata-jpa-detail/jpafunction.jpg">
-<meta property="og:updated_time" content="2019-07-25T03:15:20.550Z">
+<meta property="og:updated_time" content="2019-07-25T03:18:58.914Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringData Jpa复杂查询，包括多表关联，分页，排序等">
 <meta name="twitter:description" content="（转载自网络）本篇进行Spring-data-jpa的介绍，几乎涵盖该框架的所有方面，在日常的开发当中，基本上能满足所有需求。这里不讲解JPA和Spring-data-jpa单独使用，所有的内容都是在和Spring整合的环境中实现。如果需要了解该框架的入门，百度一下，很多入门的介绍。在这篇文章的接下来一篇，会有一个系列来讲解mybatis，这个系列从mybatis的入门开始，到基本使用，和spri">
@@ -420,7 +418,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-25 11:15:20" itemprop="dateModified" datetime="2019-07-25T11:15:20+08:00">2019-07-25</time>
+                <time title="修改时间：2019-07-25 11:18:58" itemprop="dateModified" datetime="2019-07-25T11:18:58+08:00">2019-07-25</time>
               
             
           </span>
@@ -507,8 +505,6 @@
 <p>a.数据库建表：user,主键自增</p>
 <img src="/2019/07/23/springdata-jpa-detail/user-table.jpg" title="user表">
 
-
-<p><img src="springdata-jpa-detail/user-table.jpg" alt></p>
 <p>b.对应实体：User</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"user"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue</span>(strategy = GenerationType.IDENTITY)</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="keyword">private</span> String birthday;</span><br><span class="line">    <span class="comment">// getter,setter</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -552,7 +548,6 @@
 <p>这也是简单到令人发指，spring-data-jpa所有的语法规定如下图： </p>
 <img src="/2019/07/23/springdata-jpa-detail/jpafunction.jpg" title="方法命名参考">
 
-<p><img src="springdata-jpa-detail/jpafunction.jpg" alt="JPA方法命名"></p>
 <p>通过上面，基本CRUD和基本的业务逻辑操作都得到了解决，我们要做的工作少到仅仅需要在UserRepository接口中定义几个方法，其他所有的工作都由spring-data-jpa来完成。</p>
 <p>接下来：就是比较复杂的操作了，比如动态查询，分页，下面详细介绍spring-data-jpa的第二大杀手锏，强大的动态查询能力。</p>
 <p>在上面的介绍中，对于我们传统的企业级应用的基本操作已经能够基本上全部实现，企业级应用一般都会有一个模糊查询的功能，并且是多条的查询，在有查询条件的时候我们需要在where后面接上一个 xxx = yyy 或者 xxx like ‘% + yyy + %’类似这样的sql。那么我们传统的JDBC的做法是使用很多的if语句根据传过来的查询条件来拼sql，mybatis的做法也类似，由于mybatis有强大的动态xml文件的标签，在处理这种问题的时候显得非常的好，但是二者的原理都一致，那spring-data-jpa的原理也同样很类似，这个道理也就说明了解决多表关联动态查询根儿上也就是这么回事。</p>
